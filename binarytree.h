@@ -30,10 +30,10 @@ public:
         nodes_.push(root);
         break;
       case TraverseOrder::InOrder:
-        InOrderLeftmost(root);
+        InOrder(root);
         break;
       case TraverseOrder::PostOrder:
-        // TODO
+        PostOrder(root);
         break;
       }
     }
@@ -57,11 +57,11 @@ public:
       break;
     case TraverseOrder::InOrder:
       if (next_root->right) {
-        InOrderLeftmost(next_root->right);
+        InOrder(next_root->right);
       }
       break;
     case TraverseOrder::PostOrder:
-      // TODO
+      // Nothing to do
       break;
     }
 
@@ -69,11 +69,19 @@ public:
   }
 
 private:
-    void InOrderLeftmost(TreeNode* root) {
+    void InOrder(TreeNode* root) {
         while(root) {
             nodes_.push(root);
             root = root->left;
         }
+    }
+
+    void PostOrder(TreeNode* root) {
+      if (root) {
+        nodes_.push(root);
+        PostOrder(root->right);
+        PostOrder(root->left);
+      }
     }
 
   TreeNode* root_ = nullptr;
